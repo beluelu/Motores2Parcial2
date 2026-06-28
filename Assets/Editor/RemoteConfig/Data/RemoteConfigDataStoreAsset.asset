@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
+  m_Name: RemoteConfigDataStoreAsset
+  m_EditorClassIdentifier: 
+  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"6dc05fb0-9f07-402e-990a-88576a4df670\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"player_speed\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 2.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"42cc4357-e923-41f2-b6f9-ea5b2240cede\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"jump_force\",\r\n      \"type\": \"float\",\r\n      \"value\": 7.0\r\n   
+    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"e296fc65-b495-4e38-91c8-8b450a47856e\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"gravity\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": -25.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"b559e23d-caed-45a2-8bd3-3ac14eb60dbc\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"spawn_zombie\",\r\n      \"type\": \"bool\",\r\n      \"value\": true\r\n   
+    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"1d88cd68-d8ef-4b36-a39c-1798fb204c9d\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"coins_amount\",\r\n      \"type\": \"int\",\r\n     
+    \"value\": 7\r\n    }\r\n  }\r\n]"
+  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"6dc05fb0-9f07-402e-990a-88576a4df670\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"player_speed\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 2.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"42cc4357-e923-41f2-b6f9-ea5b2240cede\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"jump_force\",\r\n      \"type\": \"float\",\r\n      \"value\": 7.0\r\n   
+    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"e296fc65-b495-4e38-91c8-8b450a47856e\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"gravity\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": -25.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"b559e23d-caed-45a2-8bd3-3ac14eb60dbc\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"spawn_zombie\",\r\n      \"type\": \"bool\",\r\n      \"value\": true\r\n   
+    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"1d88cd68-d8ef-4b36-a39c-1798fb204c9d\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"coins_amount\",\r\n      \"type\": \"int\",\r\n     
+    \"value\": 7\r\n    }\r\n  }\r\n]"
+  _environments: "[\r\n  {\r\n    \"projectId\": \"c768ae61-a5a4-401d-ac70-1c5c000b6476\",\r\n   
+    \"name\": \"production\",\r\n    \"id\": \"32c8126b-334d-4a11-8de4-b7a982e160b7\",\r\n   
+    \"isDefault\": true,\r\n    \"createdAt\": \"2026-04-08T14:55:01Z\",\r\n    \"updatedAt\":
+    \"2026-04-08T14:55:01Z\"\r\n  }\r\n]"
