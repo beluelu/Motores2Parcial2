@@ -11,13 +11,12 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        Time.timeScale = 1f; // 🔥 FIX
+        Time.timeScale = 1f;
     }
 
     public void AddCoins(int amount)
     {
         currentCoins += amount;
-
         Debug.Log("Monedas actuales: " + currentCoins);
 
         if (currentCoins >= coinsToWin)
@@ -30,8 +29,18 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GANASTE");
 
-        victoryPanel.SetActive(true);
+        
+        if (DataManager.Instance != null)
+        {
+            DataManager.Instance.currency += currentCoins;
+            DataManager.Instance.SaveData();
+        }
+        else
+        {
+            Debug.LogWarning("DataManager no encontrado. Entrá desde el menú de inicio.");
+        }
 
+        victoryPanel.SetActive(true);
         Time.timeScale = 0f;
     }
 }

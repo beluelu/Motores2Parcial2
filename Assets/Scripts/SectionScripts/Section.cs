@@ -110,14 +110,6 @@ public class Section : MonoBehaviour
             amount = RemoteConfigManager.Instance.coinsAmount;
         }
 
-        
-        PlayerStats playerStats = FindObjectOfType <PlayerStats>();
-
-        if (playerStats != null)
-        {
-            amount *= playerStats.coinMultiplier;
-        }
-
         for (int i = 0; i < amount; i++)
         {
             Vector3 spawnPos = coinLanes[randomLane].position;
@@ -152,28 +144,7 @@ public class Section : MonoBehaviour
 
     public void DuplicateCoins()
     {
-        List<GameObject> newCoins = new List<GameObject>();
-
-        foreach (GameObject coin in currentCoins)
-        {
-            if (coin == null) continue;
-
-            Vector3 newPos = coin.transform.position;
-
-            
-            newPos.x += 0.5f;
-
-            GameObject newCoin = Instantiate(
-                coinPrefab,
-                newPos,
-                coin.transform.rotation,
-                transform
-            );
-
-            newCoins.Add(newCoin);
-        }
-
-        currentCoins.AddRange(newCoins);
+        // No hace nada visualmente, manteniendo la fila india prolija.
     }
 
     void ClearCoins()
@@ -191,7 +162,6 @@ public class Section : MonoBehaviour
 
     void Update()
     {
-        
         if (isGameOver) return;
 
         transform.Translate(Vector3.back * speed * Time.deltaTime);

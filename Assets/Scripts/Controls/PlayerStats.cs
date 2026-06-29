@@ -6,13 +6,11 @@ public class PlayerStats : MonoBehaviour
     public int maxLives = 3;
     public int currentLives;
 
-    
     public bool hasShield = false;
     public int coinMultiplier = 1;
 
     private PlayerAnimation playerAnim;
 
-    
     public UIHearts uiHearts;
 
     public int coins = 0;
@@ -46,7 +44,6 @@ public class PlayerStats : MonoBehaviour
 
         if (currentLives <= 0)
         {
-
             if (playerAnim != null)
             {
                 StartCoroutine(playerAnim.Fall());
@@ -65,8 +62,6 @@ public class PlayerStats : MonoBehaviour
             uiHearts.UpdateHearts(currentLives);
     }
 
-    
-
     public void ActivateShield(float duration)
     {
         StartCoroutine(ShieldCoroutine(duration));
@@ -79,22 +74,24 @@ public class PlayerStats : MonoBehaviour
         hasShield = false;
     }
 
+    
     public void ActivateDoubleCoins(float duration)
     {
+        
         StartCoroutine(DoubleCoins(duration));
-        Section[] sections = FindObjectsOfType<Section>();
 
-        foreach (Section section in sections)
-        {
-            section.DuplicateCoins();
-        }
+        
     }
 
     IEnumerator DoubleCoins(float duration)
     {
-        coinMultiplier = 2;
+        coinMultiplier = 2; 
+        Debug.Log("¡Multiplicador x2 Activado en PlayerStats!");
+
         yield return new WaitForSeconds(duration);
-        coinMultiplier = 1;
+
+        coinMultiplier = 1; 
+        Debug.Log("Multiplicador x2 Terminado.");
     }
 
     public void AddCoins(int amount)
