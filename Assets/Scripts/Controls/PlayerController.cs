@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
             gravity = RemoteConfigManager.Instance.gravity;
         }
 
-        Swipe swipe = FindObjectOfType<Swipe>();
+        Swipe swipe = FindFirstObjectByType<Swipe>();
 
         if (swipe != null)
         {
@@ -107,6 +107,8 @@ public class PlayerController : MonoBehaviour
 
     public void MoveLeft()
     {
+        if (Time.timeScale == 0f) return;
+
         if (isChangingLane) return;
 
         if (currentLane > 0)
@@ -118,6 +120,8 @@ public class PlayerController : MonoBehaviour
 
     public void MoveRight()
     {
+        if (Time.timeScale == 0f) return;
+
         if (isChangingLane) return;
 
         if (currentLane < 2)
@@ -129,6 +133,8 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        if (Time.timeScale == 0f) return;
+
         if (isGrounded)
         {
             verticalVelocity = jumpForce;
@@ -149,7 +155,7 @@ public class PlayerController : MonoBehaviour
         PlayerStats stats = GetComponent<PlayerStats>();
         int otherLayer = other.gameObject.layer;
 
-        
+
         if (((1 << otherLayer) & smallObstacleLayer) != 0)
         {
             if (isGrounded)
@@ -158,7 +164,7 @@ public class PlayerController : MonoBehaviour
                 {
                     stats.TakeDamage(1);
 
-                    
+
                     if (stats.currentLives <= 0)
                     {
                         Section.isGameOver = true;
@@ -168,7 +174,7 @@ public class PlayerController : MonoBehaviour
                 TriggerStumble();
             }
         }
-        
+
         else if (((1 << otherLayer) & bigObstacleLayer) != 0)
         {
             if (!playerAnim.isRolling)
@@ -176,7 +182,7 @@ public class PlayerController : MonoBehaviour
                 if (stats != null)
                     stats.TakeDamage(999);
 
-                
+
                 Section.isGameOver = true;
             }
         }
