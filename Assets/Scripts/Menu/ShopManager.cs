@@ -1,6 +1,7 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
@@ -13,85 +14,119 @@ public class ShopManager : MonoBehaviour
     public int clairePrice = 40;
     public int katePrice = 40;
 
-    [Header("Buy Buttons")]
-    public Button buyJalmeButton;
-    public Button buySamButton;
-    public Button buyClaireButton;
-    public Button buyKateButton;
-
-    [Header("Buttons Text (Optional)")]
-    public TextMeshProUGUI jalmeText;
-    public TextMeshProUGUI samText;
-    public TextMeshProUGUI claireText;
-    public TextMeshProUGUI kateText;
+    [Header("Row Lists (Individual Purchase)")]
+    public List<Button> jalmeButtons = new List<Button>();
+    public List<Button> samButtons = new List<Button>();
+    public List<Button> claireButtons = new List<Button>();
+    public List<Button> kateButtons = new List<Button>();
 
     private void Start()
     {
+        InitializeShopButtons();
         UpdateShopUI();
+    }
+
+    private void InitializeShopButtons()
+    {
+        for (int i = 0; i < jalmeButtons.Count; i++)
+        {
+            int index = i;
+            if (jalmeButtons[i] != null)
+            {
+                jalmeButtons[i].onClick.AddListener(() => BuyJalmeIndividual(index));
+            }
+        }
+
+        for (int i = 0; i < samButtons.Count; i++)
+        {
+            int index = i;
+            if (samButtons[i] != null)
+            {
+                samButtons[i].onClick.AddListener(() => BuySamIndividual(index));
+            }
+        }
+
+        for (int i = 0; i < claireButtons.Count; i++)
+        {
+            int index = i;
+            if (claireButtons[i] != null)
+            {
+                claireButtons[i].onClick.AddListener(() => BuyClaireIndividual(index));
+            }
+        }
+
+        for (int i = 0; i < kateButtons.Count; i++)
+        {
+            int index = i;
+            if (kateButtons[i] != null)
+            {
+                kateButtons[i].onClick.AddListener(() => BuyKateIndividual(index));
+            }
+        }
     }
 
     public void UpdateShopUI()
     {
-        if (DataManager.Instance == null) return;
+        for (int i = 0; i < jalmeButtons.Count; i++)
+        {
+            if (PlayerPrefs.GetInt($"Bought_Jalme_{i}", 0) == 1) SetButtonAsOwned(jalmeButtons[i]);
+        }
 
-        
-        bool hasJalme = PlayerPrefs.GetInt("Bought_Jalme", 0) == 1;
-        if (hasJalme) SetButtonAsOwned(buyJalmeButton, jalmeText);
+        for (int i = 0; i < samButtons.Count; i++)
+        {
+            if (PlayerPrefs.GetInt($"Bought_Sam_{i}", 0) == 1) SetButtonAsOwned(samButtons[i]);
+        }
 
-       
-        bool hasSam = PlayerPrefs.GetInt("Bought_Sam", 0) == 1;
-        if (hasSam) SetButtonAsOwned(buySamButton, samText);
+        for (int i = 0; i < claireButtons.Count; i++)
+        {
+            if (PlayerPrefs.GetInt($"Bought_Claire_{i}", 0) == 1) SetButtonAsOwned(claireButtons[i]);
+        }
 
-       
-        bool hasClaire = PlayerPrefs.GetInt("Bought_Claire", 0) == 1;
-        if (hasClaire) SetButtonAsOwned(buyClaireButton, claireText);
-
-        
-        bool hasKate = PlayerPrefs.GetInt("Bought_Kate", 0) == 1;
-        if (hasKate) SetButtonAsOwned(buyKateButton, kateText);
+        for (int i = 0; i < kateButtons.Count; i++)
+        {
+            if (PlayerPrefs.GetInt($"Bought_Kate_{i}", 0) == 1) SetButtonAsOwned(kateButtons[i]);
+        }
     }
 
-    private void SetButtonAsOwned(Button button, TextMeshProUGUI text)
+    private void SetButtonAsOwned(Button button)
     {
-        button.interactable = false; 
-        if (text != null) text.text = "Owned";
+        if (button == null) return;
+        button.interactable = false;
     }
 
-    public void BuyJalme()
+    private void BuyJalmeIndividual(int index)
     {
-        TryPurchaseCharacter("Bought_Jalme", jalmePrice, buyJalmeButton, jalmeText);
+        TryPurchaseCharacter($"Bought_Jalme_{index}", jalmePrice, jalmeButtons[index]);
     }
 
-    public void BuySam()
+    private void BuySamIndividual(int index)
     {
-        TryPurchaseCharacter("Bought_Sam", samPrice, buySamButton, samText);
+        TryPurchaseCharacter($"Bought_Sam_{index}", samPrice, samButtons[index]);
     }
 
-    public void BuyClaire()
+    private void BuyClaireIndividual(int index)
     {
-        TryPurchaseCharacter("Bought_Claire", clairePrice, buyClaireButton, claireText);
+        TryPurchaseCharacter($"Bought_Claire_{index}", clairePrice, claireButtons[index]);
     }
 
-    public void BuyKate()
+    private void BuyKateIndividual(int index)
     {
-        TryPurchaseCharacter("Bought_Kate", katePrice, buyKateButton, kateText);
+        TryPurchaseCharacter($"Bought_Kate_{index}", katePrice, kateButtons[index]);
     }
 
-    
-    private void TryPurchaseCharacter(string saveKey, int price, Button button, TextMeshProUGUI text)
+    private void TryPurchaseCharacter(string saveKey, int price, Button button)
     {
         if (DataManager.Instance != null)
         {
-            
             if (DataManager.Instance.currency >= price)
             {
-                DataManager.Instance.currency -= price; 
-                DataManager.Instance.SaveData(); 
+                DataManager.Instance.currency -= price;
+                DataManager.Instance.SaveData();
 
                 PlayerPrefs.SetInt(saveKey, 1);
                 PlayerPrefs.Save();
 
-                SetButtonAsOwned(button, text);
+                SetButtonAsOwned(button);
 
                 if (mainPanel != null)
                 {
@@ -99,11 +134,11 @@ public class ShopManager : MonoBehaviour
                     mainPanel.PlaySoundButton();
                 }
 
-                Debug.Log("Compra exitosa para: " + saveKey);
+                Debug.Log("Compra individual exitosa para la clave: " + saveKey);
             }
             else
             {
-                Debug.LogWarning("No tienes monedas suficientes para comprar este personaje.");
+                Debug.LogWarning("Monedas insuficientes.");
             }
         }
     }

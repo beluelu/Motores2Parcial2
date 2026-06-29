@@ -2957,6 +2957,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407492147}
   m_CullTransparentMesh: 1
+--- !u!1 &409993100
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 409993101}
+  - component: {fileID: 409993102}
+  m_Layer: 0
+  m_Name: ShopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &409993101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409993100}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -627.45105, y: -1930.1587, z: 0}
+  m_LocalScale: {x: 1.1619463, y: 1.6931218, z: 0.7407408}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2071532015}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &409993102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409993100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 706ac9d73bfdda64b93ba32a02098922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainPanel: {fileID: 1471616649}
+  jalmePrice: 20
+  samPrice: 30
+  clairePrice: 40
+  katePrice: 40
+  jalmeButtons:
+  - {fileID: 646054540}
+  - {fileID: 1314884558}
+  - {fileID: 438703737}
+  - {fileID: 641677179}
+  - {fileID: 1271702356}
+  - {fileID: 216721400}
+  - {fileID: 28843063}
+  samButtons:
+  - {fileID: 2107341427}
+  claireButtons:
+  - {fileID: 614578805}
+  kateButtons:
+  - {fileID: 346020843}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -13566,6 +13629,7 @@ RectTransform:
   - {fileID: 13445130}
   - {fileID: 2002642149}
   - {fileID: 1399964178}
+  - {fileID: 409993101}
   m_Father: {fileID: 1471616648}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
