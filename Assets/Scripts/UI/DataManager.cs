@@ -6,6 +6,7 @@ public class DataManager : MonoBehaviour
 
     [Header("Billetera Global")]
     public int currency;
+
     void Awake()
     {
         if (Instance == null)
@@ -30,5 +31,13 @@ public class DataManager : MonoBehaviour
     public void LoadData()
     {
         currency = PlayerPrefs.GetInt("MonedasTotales", 0);
+    }
+
+    public void DeleteAllData()
+    {
+        PlayerPrefs.DeleteAll();
+        currency = 0;           
+        SaveData();             
+        Debug.Log("Todos los datos han sido borrados de PlayerPrefs.");
     }
 }
