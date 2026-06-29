@@ -112,4 +112,21 @@ public class PlayerStats : MonoBehaviour
         if (uiCoins != null)
             uiCoins.UpdateCoins(coins);
     }
+
+    public void Revive()
+    {
+        currentLives = 1;
+
+        if (uiHearts != null)
+            uiHearts.UpdateHearts(currentLives);
+
+        PlayerAnimation anim = GetComponent<PlayerAnimation>();
+
+        if (anim != null)
+        {
+            anim.isDead = false;
+        }
+
+        Section.isGameOver = false;
+    }
 }

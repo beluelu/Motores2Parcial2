@@ -5,6 +5,8 @@ using System;
 
 public class PauseScreen : MonoBehaviour
 {
+    [SerializeField] private PlayerStats playerStats;
+    
 
     [SerializeField] GameObject PauseMenuUI, PauseButtonUI, gameOverUI;
     public static PauseScreen instance;
@@ -47,5 +49,15 @@ public class PauseScreen : MonoBehaviour
         Time.timeScale = 0f;
         gameOverUI.SetActive(true);
         PauseButtonUI.SetActive(false);
+    }
+
+    public void RevivePlayer()
+    {
+        Time.timeScale = 1f;
+
+        gameOverUI.SetActive(false);
+        PauseButtonUI.SetActive(true);
+
+        playerStats.Revive();
     }
 }
