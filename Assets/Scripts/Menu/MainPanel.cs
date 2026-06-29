@@ -33,6 +33,24 @@ public class MainPanel : MonoBehaviour
     private void Start()
     {
         UpdateCoinsText();
+        LoadAndApplyVolumeSettings();
+    }
+
+    private void LoadAndApplyVolumeSettings()
+    {
+        if (volumeMaster != null)
+        {
+            float savedMaster = PlayerPrefs.GetFloat("SavedMasterVolume", 100f);
+            volumeMaster.value = savedMaster;
+            ChangeVolumeMaster(savedMaster);
+        }
+
+        if (volumeFX != null)
+        {
+            float savedFX = PlayerPrefs.GetFloat("SavedFXVolume", 100f);
+            volumeFX.value = savedFX;
+            ChangeVolumeFX(savedFX);
+        }
     }
 
     public void UpdateCoinsText()
@@ -64,10 +82,12 @@ public class MainPanel : MonoBehaviour
         if (mute.isOn)
         {
             mixer.GetFloat("VolMaster", out lastVolume);
-            mixer.SetFloat("VolMaster", -80);
+            mixer.SetFloat("VolMaster", -80f);
         }
         else
+        {
             mixer.SetFloat("VolMaster", lastVolume);
+        }
     }
 
     public void OpenPanel(GameObject panel)
@@ -83,12 +103,26 @@ public class MainPanel : MonoBehaviour
 
     public void ChangeVolumeMaster(float v)
     {
-        mixer.SetFloat("VolMaster", v);
+        if (v < 1) v = 0.001f;
+
+        PlayerPrefs.SetFloat("SavedMasterVolume", v);
+
+        if (mixer != null)
+        {
+            mixer.SetFloat("VolMaster", Mathf.Log10(v / 100f) * 20f);
+        }
     }
 
     public void ChangeVolumeFX(float v)
     {
-        mixer.SetFloat("VolFX", v);
+        if (v < 1) v = 0.001f;
+
+        PlayerPrefs.SetFloat("SavedFXVolume", v);
+
+        if (mixer != null)
+        {
+            mixer.SetFloat("VolFX", Mathf.Log10(v / 100f) * 20f);
+        }
     }
 
     public void PlaySoundButton()
