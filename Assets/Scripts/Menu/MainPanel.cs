@@ -6,7 +6,7 @@ using TMPro;
 
 public class MainPanel : MonoBehaviour
 {
-    [Header("Billetera Global (UI)")]
+    [Header("Global Wallet (UI)")]
     public TextMeshProUGUI globalCoinsText;
 
     [Header("Options")]
@@ -32,23 +32,23 @@ public class MainPanel : MonoBehaviour
 
     private void Start()
     {
-        ActualizarTextoMonedas();
+        UpdateCoinsText();
     }
 
-    public void ActualizarTextoMonedas()
+    public void UpdateCoinsText()
     {
         if (DataManager.Instance != null && globalCoinsText != null)
         {
-            globalCoinsText.text = "Coins: " + DataManager.Instance.currency.ToString();
+            globalCoinsText.text = DataManager.Instance.currency.ToString();
         }
     }
 
-    public void BorrarProgresoDelJuego()
+    public void DeleteGameProgress()
     {
         if (DataManager.Instance != null)
         {
             DataManager.Instance.DeleteAllData();
-            ActualizarTextoMonedas();
+            UpdateCoinsText();
             PlaySoundButton();
             Debug.Log("Progreso eliminado y UI actualizada desde MainPanel.");
         }
@@ -99,4 +99,10 @@ public class MainPanel : MonoBehaviour
         }
     }
 
+    public void QuitGame()
+    {
+        PlaySoundButton();
+        Debug.Log("Saliendo del juego...");
+        Application.Quit();
+    }
 }
