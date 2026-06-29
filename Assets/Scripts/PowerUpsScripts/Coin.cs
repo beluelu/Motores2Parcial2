@@ -4,6 +4,9 @@ public class Coin : MonoBehaviour
 {
     public int value = 1;
 
+    [Header("Efecto de Sonido")]
+    public AudioClip coinSound;
+
     void Update()
     {
         transform.Rotate(0, 150f * Time.deltaTime, 0);
@@ -21,7 +24,11 @@ public class Coin : MonoBehaviour
 
                 stats.AddCoins(total);
 
-                
+                if (stats.audioSourceGlobal != null && coinSound != null)
+                {
+                    stats.audioSourceGlobal.PlayOneShot(coinSound);
+                }
+
                 if (GameManager.instance != null)
                 {
                     GameManager.instance.AddCoins(total);

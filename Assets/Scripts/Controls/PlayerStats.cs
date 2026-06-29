@@ -16,6 +16,11 @@ public class PlayerStats : MonoBehaviour
     public int coins = 0;
     public UICoins uiCoins;
 
+    [Header("Efectos de Sonido (Powerups y Monedas)")]
+    public AudioSource audioSourceGlobal; 
+    public AudioClip healSound;           
+    public AudioClip doubleCoinsSound;
+
     void Start()
     {
         currentLives = maxLives;
@@ -58,6 +63,11 @@ public class PlayerStats : MonoBehaviour
         currentLives += amount;
         currentLives = Mathf.Clamp(currentLives, 0, maxLives);
 
+        if (audioSourceGlobal != null && healSound != null)
+        {
+            audioSourceGlobal.PlayOneShot(healSound);
+        }
+
         if (uiHearts != null)
             uiHearts.UpdateHearts(currentLives);
     }
@@ -74,23 +84,24 @@ public class PlayerStats : MonoBehaviour
         hasShield = false;
     }
 
-    
     public void ActivateDoubleCoins(float duration)
     {
-        
-        StartCoroutine(DoubleCoins(duration));
+        if (audioSourceGlobal != null && doubleCoinsSound != null)
+        {
+            audioSourceGlobal.PlayOneShot(doubleCoinsSound);
+        }
 
-        
+        StartCoroutine(DoubleCoins(duration));
     }
 
     IEnumerator DoubleCoins(float duration)
     {
-        coinMultiplier = 2; 
+        coinMultiplier = 2;
         Debug.Log("¡Multiplicador x2 Activado en PlayerStats!");
 
         yield return new WaitForSeconds(duration);
 
-        coinMultiplier = 1; 
+        coinMultiplier = 1;
         Debug.Log("Multiplicador x2 Terminado.");
     }
 
