@@ -23,7 +23,11 @@ public class PlayerAnimation : MonoBehaviour
 
     void Roll()
     {
-        
+        TutorialManager tutorial = FindFirstObjectByType<TutorialManager>();
+
+        if (tutorial != null && tutorial.IsTutorialPaused())
+            return;
+
         if (IsBusy()) return;
 
         animator.SetTrigger("Roll");
@@ -34,7 +38,11 @@ public class PlayerAnimation : MonoBehaviour
 
     void JumpAnim()
     {
-        
+        TutorialManager tutorial = FindFirstObjectByType<TutorialManager>();
+
+        if (tutorial != null && tutorial.IsTutorialPaused())
+            return;
+
         if (IsBusy()) return;
 
         Debug.Log("JUMP ANIM");
