@@ -25,9 +25,14 @@ public class PlayerAnimation : MonoBehaviour
     {
         TutorialManager tutorial = FindFirstObjectByType<TutorialManager>();
 
+        // Mientras corre entre tutoriales, no puede rodar
+        if (tutorial != null && tutorial.waitingForTutorial)
+            return;
+
+        // Si hay un panel abierto y NO es el del Roll, tampoco
         if (tutorial != null &&
-     tutorial.IsTutorialPaused() &&
-     tutorial.currentStep != TutorialManager.TutorialStep.Roll)
+            tutorial.IsTutorialPaused() &&
+            tutorial.currentStep != TutorialManager.TutorialStep.Roll)
         {
             return;
         }
@@ -46,16 +51,19 @@ public class PlayerAnimation : MonoBehaviour
     {
         TutorialManager tutorial = FindFirstObjectByType<TutorialManager>();
 
+        // Mientras corre entre tutoriales, no puede reproducir la animación
+        if (tutorial != null && tutorial.waitingForTutorial)
+            return;
+
         if (tutorial != null &&
-     tutorial.IsTutorialPaused() &&
-     tutorial.currentStep != TutorialManager.TutorialStep.Jump)
+            tutorial.IsTutorialPaused() &&
+            tutorial.currentStep != TutorialManager.TutorialStep.Jump)
         {
             return;
         }
 
         if (IsBusy()) return;
 
-        Debug.Log("JUMP ANIM");
         animator.SetTrigger("Jump");
         isJumping = true;
     }
