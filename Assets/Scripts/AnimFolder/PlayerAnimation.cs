@@ -25,8 +25,12 @@ public class PlayerAnimation : MonoBehaviour
     {
         TutorialManager tutorial = FindFirstObjectByType<TutorialManager>();
 
-        if (tutorial != null && tutorial.IsTutorialPaused())
+        if (tutorial != null &&
+     tutorial.IsTutorialPaused() &&
+     tutorial.currentStep != TutorialManager.TutorialStep.Roll)
+        {
             return;
+        }
 
         if (IsBusy()) return;
 
@@ -34,14 +38,20 @@ public class PlayerAnimation : MonoBehaviour
         isRolling = true;
 
         GetComponent<PlayerController>().StartRollCollider();
+
+        tutorial?.CheckRoll();
     }
 
     void JumpAnim()
     {
         TutorialManager tutorial = FindFirstObjectByType<TutorialManager>();
 
-        if (tutorial != null && tutorial.IsTutorialPaused())
+        if (tutorial != null &&
+     tutorial.IsTutorialPaused() &&
+     tutorial.currentStep != TutorialManager.TutorialStep.Jump)
+        {
             return;
+        }
 
         if (IsBusy()) return;
 

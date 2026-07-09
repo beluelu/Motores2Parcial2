@@ -111,7 +111,18 @@ public class PlayerController : MonoBehaviour
 
     public void MoveLeft()
     {
-        
+        if (tutorialManager != null &&
+    tutorialManager.currentStep == TutorialManager.TutorialStep.Jump)
+        {
+            return;
+        }
+
+        if (tutorialManager != null &&
+    tutorialManager.currentStep == TutorialManager.TutorialStep.Roll)
+        {
+            return;
+        }
+
         if (Time.timeScale == 0f) return;
 
         if (isChangingLane) return;
@@ -134,7 +145,18 @@ public class PlayerController : MonoBehaviour
 
     public void MoveRight()
     {
-        
+        if (tutorialManager != null &&
+    tutorialManager.currentStep == TutorialManager.TutorialStep.Jump)
+        {
+            return;
+        }
+
+        if (tutorialManager != null &&
+    tutorialManager.currentStep == TutorialManager.TutorialStep.Roll)
+        {
+            return;
+        }
+
         if (Time.timeScale == 0f) return;
 
         if (isChangingLane) return;
@@ -157,8 +179,12 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (tutorialManager != null && tutorialManager.IsTutorialPaused())
+        if (tutorialManager != null &&
+    tutorialManager.IsTutorialPaused() &&
+    tutorialManager.currentStep != TutorialManager.TutorialStep.Jump)
+        {
             return;
+        }
 
         if (Time.timeScale == 0f) return;
 
@@ -166,6 +192,8 @@ public class PlayerController : MonoBehaviour
         {
             verticalVelocity = jumpForce;
             isGrounded = false;
+
+            tutorialManager?.CheckJump();
         }
     }
 

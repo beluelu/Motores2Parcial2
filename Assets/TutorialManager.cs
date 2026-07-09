@@ -21,7 +21,9 @@ public class TutorialManager : MonoBehaviour
         None,
         MoveLeft,
         MoveRight,
-        AvoidObstacle
+        AvoidObstacle,
+        Jump,
+        Roll
     }
 
     public TutorialStep currentStep;
@@ -79,6 +81,24 @@ public class TutorialManager : MonoBehaviour
     public void CheckAvoidObstacle()
     {
         if (currentStep == TutorialStep.AvoidObstacle)
+        {
+            ResumeFloor();
+            currentStep = TutorialStep.None;
+        }
+    }
+
+    public void CheckJump()
+    {
+        if (currentStep == TutorialStep.Jump)
+        {
+            ResumeFloor();
+            currentStep = TutorialStep.None;
+        }
+    }
+
+    public void CheckRoll()
+    {
+        if (currentStep == TutorialStep.Roll)
         {
             ResumeFloor();
             currentStep = TutorialStep.None;
