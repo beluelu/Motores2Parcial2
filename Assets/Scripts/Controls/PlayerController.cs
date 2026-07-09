@@ -111,6 +111,8 @@ public class PlayerController : MonoBehaviour
 
     public void MoveLeft()
     {
+        if (tutorialManager != null && tutorialManager.waitingForTutorial)
+            return;
         if (tutorialManager != null &&
     tutorialManager.currentStep == TutorialManager.TutorialStep.Jump)
         {
@@ -145,6 +147,8 @@ public class PlayerController : MonoBehaviour
 
     public void MoveRight()
     {
+        if (tutorialManager != null && tutorialManager.waitingForTutorial)
+            return;
         if (tutorialManager != null &&
     tutorialManager.currentStep == TutorialManager.TutorialStep.Jump)
         {
@@ -179,6 +183,8 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        if (tutorialManager != null && tutorialManager.waitingForTutorial)
+            return;
         if (tutorialManager != null &&
     tutorialManager.IsTutorialPaused() &&
     tutorialManager.currentStep != TutorialManager.TutorialStep.Jump)

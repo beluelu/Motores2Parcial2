@@ -10,6 +10,8 @@ public class TutorialManager : MonoBehaviour
     private PlayerController player;
     private PlayerAnimation playerAnimation;
 
+    public bool waitingForTutorial = true;
+
     private void Start()
     {
         player = FindFirstObjectByType<PlayerController>();
@@ -32,7 +34,7 @@ public class TutorialManager : MonoBehaviour
     {
         tutorialFloor.canMove = false;
 
-       
+        waitingForTutorial = false;
         playerAnimation.StopRun();
 
         tutorialPanel.SetActive(true);
@@ -45,7 +47,7 @@ public class TutorialManager : MonoBehaviour
     {
         tutorialFloor.canMove = true;
 
-       
+        waitingForTutorial = true;
         playerAnimation.ResumeRun();
 
         tutorialPanel.SetActive(false);
