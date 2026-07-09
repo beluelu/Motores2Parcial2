@@ -7,6 +7,12 @@ public class TutorialManager : MonoBehaviour
     public GameObject tutorialPanel;
     public TMP_Text tutorialText;
 
+    [Header("Tutorial Arrows")]
+    public GameObject leftArrow;
+    public GameObject rightArrow;
+    public GameObject upArrow;
+    public GameObject downArrow;
+
     private PlayerController player;
     private PlayerAnimation playerAnimation;
 
@@ -16,6 +22,16 @@ public class TutorialManager : MonoBehaviour
     {
         player = FindFirstObjectByType<PlayerController>();
         playerAnimation = FindFirstObjectByType<PlayerAnimation>();
+
+        HideAllArrows();
+    }
+
+    void HideAllArrows()
+    {
+        leftArrow.SetActive(false);
+        rightArrow.SetActive(false);
+        upArrow.SetActive(false);
+        downArrow.SetActive(false);
     }
 
     public enum TutorialStep
@@ -41,6 +57,27 @@ public class TutorialManager : MonoBehaviour
         tutorialPanel.SetActive(true);
         tutorialText.text = message;
 
+        HideAllArrows();
+
+        switch (step)
+        {
+            case TutorialStep.MoveLeft:
+                leftArrow.SetActive(true);
+                break;
+
+            case TutorialStep.MoveRight:
+                rightArrow.SetActive(true);
+                break;
+
+            case TutorialStep.Jump:
+                upArrow.SetActive(true);
+                break;
+
+            case TutorialStep.Roll:
+                downArrow.SetActive(true);
+                break;
+        }
+
         currentStep = step;
     }
 
@@ -50,6 +87,8 @@ public class TutorialManager : MonoBehaviour
 
         waitingForTutorial = true;
         playerAnimation.ResumeRun();
+
+        HideAllArrows();
 
         tutorialPanel.SetActive(false);
     }
