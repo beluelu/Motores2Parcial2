@@ -25,7 +25,8 @@ public class TutorialManager : MonoBehaviour
         MoveRight,
         AvoidObstacle,
         Jump,
-        Roll
+        Roll,
+        CollectCoins
     }
 
     public TutorialStep currentStep;
