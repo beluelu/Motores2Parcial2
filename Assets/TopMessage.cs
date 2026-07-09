@@ -7,7 +7,7 @@ public class TopMessage : MonoBehaviour
     public GameObject panel;
     public TMP_Text text;
 
-    public void ShowMessage(string message, float duration = 5f)
+    public void ShowMessage(string message, float duration = 3f)
     {
         StopAllCoroutines();
         StartCoroutine(ShowRoutine(message, duration));
