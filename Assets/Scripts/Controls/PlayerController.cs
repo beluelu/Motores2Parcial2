@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    private TutorialManager tutorialManager;
+   
     private int currentLane = 1;
 
     public float laneDistance = 3f;
@@ -31,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        tutorialManager = FindFirstObjectByType<TutorialManager>();
         playerAnim = GetComponent<PlayerAnimation>();
 
 
@@ -107,32 +111,53 @@ public class PlayerController : MonoBehaviour
 
     public void MoveLeft()
     {
+        
         if (Time.timeScale == 0f) return;
 
         if (isChangingLane) return;
+
+        if (tutorialManager != null &&
+    tutorialManager.currentStep == TutorialManager.TutorialStep.MoveRight)
+        {
+            return;
+        }
 
         if (currentLane > 0)
         {
             currentLane--;
             isChangingLane = true;
+
+            tutorialManager?.CheckMoveLeft();
         }
     }
 
     public void MoveRight()
     {
+        
         if (Time.timeScale == 0f) return;
 
         if (isChangingLane) return;
+
+        if (tutorialManager != null &&
+    tutorialManager.currentStep == TutorialManager.TutorialStep.MoveLeft)
+        {
+            return;
+        }
 
         if (currentLane < 2)
         {
             currentLane++;
             isChangingLane = true;
+
+            tutorialManager?.CheckMoveRight();
         }
     }
 
     public void Jump()
     {
+        if (tutorialManager != null && tutorialManager.IsTutorialPaused())
+            return;
+
         if (Time.timeScale == 0f) return;
 
         if (isGrounded)

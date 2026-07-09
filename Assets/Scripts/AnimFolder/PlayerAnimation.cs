@@ -23,6 +23,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void Roll()
     {
+        
         if (IsBusy()) return;
 
         animator.SetTrigger("Roll");
@@ -33,6 +34,7 @@ public class PlayerAnimation : MonoBehaviour
 
     void JumpAnim()
     {
+        
         if (IsBusy()) return;
 
         Debug.Log("JUMP ANIM");
@@ -103,5 +105,15 @@ public class PlayerAnimation : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         PlayerController.IsGameOver();
+    }
+
+    public void StopRun()
+    {
+        animator.enabled = false;
+    }
+
+    public void ResumeRun()
+    {
+        animator.enabled = true;
     }
 }
