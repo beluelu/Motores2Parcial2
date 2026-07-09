@@ -12,6 +12,20 @@ public class FinishTrigger : MonoBehaviour
 
         tutorialFloor.canMove = false;
 
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+
+        if (player != null)
+        {
+            player.enabled = false;
+        }
+
+        PlayerAnimation animation = FindFirstObjectByType<PlayerAnimation>();
+
+        if (animation != null)
+        {
+            animation.StopRun();
+        }
+
         finishPanel.SetActive(true);
 
         Destroy(gameObject);
