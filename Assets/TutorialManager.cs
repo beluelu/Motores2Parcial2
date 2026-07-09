@@ -20,7 +20,8 @@ public class TutorialManager : MonoBehaviour
     {
         None,
         MoveLeft,
-        MoveRight
+        MoveRight,
+        AvoidObstacle
     }
 
     public TutorialStep currentStep;
@@ -60,6 +61,24 @@ public class TutorialManager : MonoBehaviour
     public void CheckMoveRight()
     {
         if (currentStep == TutorialStep.MoveRight)
+        {
+            ResumeFloor();
+            currentStep = TutorialStep.None;
+        }
+    }
+
+    public void CheckObstacle()
+    {
+        if (currentStep == TutorialStep.AvoidObstacle)
+        {
+            ResumeFloor();
+            currentStep = TutorialStep.None;
+        }
+    }
+
+    public void CheckAvoidObstacle()
+    {
+        if (currentStep == TutorialStep.AvoidObstacle)
         {
             ResumeFloor();
             currentStep = TutorialStep.None;

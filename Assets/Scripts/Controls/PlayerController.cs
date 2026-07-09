@@ -128,6 +128,7 @@ public class PlayerController : MonoBehaviour
             isChangingLane = true;
 
             tutorialManager?.CheckMoveLeft();
+            tutorialManager?.CheckAvoidObstacle();
         }
     }
 
@@ -150,6 +151,7 @@ public class PlayerController : MonoBehaviour
             isChangingLane = true;
 
             tutorialManager?.CheckMoveRight();
+            tutorialManager?.CheckAvoidObstacle();
         }
     }
 
