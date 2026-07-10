@@ -8,6 +8,8 @@ public class AdsManager : MonoBehaviour
 
     private LevelPlayRewardedAd rewardedAd;
 
+    private bool rewardGranted = false;
+
     private void Start()
     {
         OnInitSuccess(null);
@@ -86,8 +88,26 @@ public class AdsManager : MonoBehaviour
 
         if (pause != null)
         {
-            pause.RevivePlayer();
+            if (rewardGranted)
+            {
+                // Vio el anuncio completo
+                pause.RevivePlayer();
+            }
+            else
+            {
+                // Lo cerró antes
+                PlayerStats stats = FindFirstObjectByType<PlayerStats>();
+
+                if (stats != null)
+                {
+                    stats.AddCoins(10);
+                }
+
+                pause.GameOver();
+            }
         }
+
+        rewardGranted = false;
 
         rewardedAd.LoadAd();
 
@@ -97,6 +117,8 @@ public class AdsManager : MonoBehaviour
     private void OnAdRewarded(LevelPlayAdInfo adInfo, LevelPlayReward reward)
     {
         Debug.Log("Recompensa obtenida");
+
+        rewardGranted = true;
     }
 
     private void OnAdDisplayFailed(LevelPlayAdInfo adInfo, LevelPlayAdError error)
