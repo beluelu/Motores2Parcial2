@@ -12,20 +12,10 @@ public class AdsManager : MonoBehaviour
 
     private void Start()
     {
-        OnInitSuccess(null);
+        CreateRewarded();
     }
 
-    private void OnEnable()
-    {
-        LevelPlay.OnInitSuccess += OnInitSuccess;
-        LevelPlay.OnInitFailed += OnInitFailed;
-    }
-
-    private void OnDisable()
-    {
-        LevelPlay.OnInitSuccess -= OnInitSuccess;
-        LevelPlay.OnInitFailed -= OnInitFailed;
-    }
+    
 
     public void ShowRewardedAd()
     {
@@ -40,29 +30,25 @@ public class AdsManager : MonoBehaviour
         }
     }
 
-    private void OnInitSuccess(LevelPlayConfiguration configuration)
+    private void CreateRewarded()
     {
-        Debug.Log("LevelPlay inicializado");
+        Debug.Log("Creando Rewarded");
 
         rewardedAd = new LevelPlayRewardedAd(rewardedAdUnitId);
+
         rewardedAd.OnAdLoaded += OnRewardedLoaded;
         rewardedAd.OnAdLoadFailed += OnRewardedLoadFailed;
-
-        rewardedAd.LoadAd();
-
         rewardedAd.OnAdDisplayed += OnAdDisplayed;
         rewardedAd.OnAdClosed += OnAdClosed;
         rewardedAd.OnAdRewarded += OnAdRewarded;
         rewardedAd.OnAdDisplayFailed += OnAdDisplayFailed;
 
-        Debug.Log("Rewarded creada");
+        rewardedAd.LoadAd();
     }
 
-    private void OnInitFailed(LevelPlayInitError error)
-    {
-        Debug.LogError("Error al inicializar: " + error);
-    }
 
+
+   
     private void OnRewardedLoaded(LevelPlayAdInfo adInfo)
     {
         Debug.Log("Rewarded cargada");
