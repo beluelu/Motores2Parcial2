@@ -41,7 +41,18 @@ public class PauseScreen : MonoBehaviour
 
     public void GoToMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        Time.timeScale = 1f;
+
+        InterstitialAds interstitial = FindFirstObjectByType<InterstitialAds>();
+
+        if (interstitial != null)
+        {
+            interstitial.ShowInterstitial("MainMenu");
+        }
+        else
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 
     public void GameOver()
