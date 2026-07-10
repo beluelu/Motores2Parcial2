@@ -142,4 +142,14 @@ public class PlayerAnimation : MonoBehaviour
     {
         animator.enabled = true;
     }
+
+    public void ReviveAnimation()
+    {
+        isDead = false;
+
+        animator.Rebind();
+        animator.Update(0f);
+
+        animator.Play("Running");
+    }
 }

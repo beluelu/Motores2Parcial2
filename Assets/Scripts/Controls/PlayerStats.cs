@@ -124,7 +124,7 @@ public class PlayerStats : MonoBehaviour
 
         if (anim != null)
         {
-            anim.isDead = false;
+            anim.ReviveAnimation();
         }
 
         Section.isGameOver = false;

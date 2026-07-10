@@ -162,8 +162,12 @@ public class Section : MonoBehaviour
 
     void Update()
     {
+
+        Debug.Log("TimeScale = " + Time.timeScale);
+
         if (isGameOver) return;
 
+        Debug.Log("Moviendo Section");
         transform.Translate(Vector3.back * speed * Time.deltaTime);
 
         if (transform.position.z <= -20)

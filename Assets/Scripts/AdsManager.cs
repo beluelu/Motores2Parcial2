@@ -27,6 +27,11 @@ public class AdsManager : MonoBehaviour
 
     public void ShowRewardedAd()
     {
+        Debug.Log("Mostrando Rewarded");
+
+        Time.timeScale = 0f;
+        AudioListener.pause = true;
+
         if (rewardedAd != null)
         {
             rewardedAd.ShowAd();
@@ -65,14 +70,28 @@ public class AdsManager : MonoBehaviour
     {
         Debug.LogError("Error al cargar Rewarded: " + error);
     }
+
     private void OnAdDisplayed(LevelPlayAdInfo adInfo)
     {
         Debug.Log("Anuncio mostrado");
+
+        Time.timeScale = 0f;
     }
 
     private void OnAdClosed(LevelPlayAdInfo adInfo)
     {
         Debug.Log("Anuncio cerrado");
+
+        PauseScreen pause = FindFirstObjectByType<PauseScreen>();
+
+        if (pause != null)
+        {
+            pause.RevivePlayer();
+        }
+
+        rewardedAd.LoadAd();
+
+        AudioListener.pause = false;
     }
 
     private void OnAdRewarded(LevelPlayAdInfo adInfo, LevelPlayReward reward)

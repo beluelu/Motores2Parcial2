@@ -71,4 +71,16 @@ public class PauseScreen : MonoBehaviour
 
         playerStats.Revive();
     }
+
+    public void ShowReviveAd()
+    {
+        gameOverUI.SetActive(false);
+
+        AdsManager ads = FindFirstObjectByType<AdsManager>();
+
+        if (ads != null)
+        {
+            ads.ShowRewardedAd();
+        }
+    }
 }
