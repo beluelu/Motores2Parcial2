@@ -10,10 +10,19 @@ public class AdsManager : MonoBehaviour
 
     private void Start()
     {
+        OnInitSuccess(null);
+    }
+
+    private void OnEnable()
+    {
         LevelPlay.OnInitSuccess += OnInitSuccess;
         LevelPlay.OnInitFailed += OnInitFailed;
+    }
 
-        LevelPlay.Init(appKey);
+    private void OnDisable()
+    {
+        LevelPlay.OnInitSuccess -= OnInitSuccess;
+        LevelPlay.OnInitFailed -= OnInitFailed;
     }
 
     public void ShowRewardedAd()

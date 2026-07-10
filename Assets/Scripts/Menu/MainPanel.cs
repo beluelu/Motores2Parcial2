@@ -74,6 +74,11 @@ public class MainPanel : MonoBehaviour
 
     public void PlayLevel(string levelName)
     {
+        if (BannerAds.Instance != null)
+        {
+            BannerAds.Instance.HideBanner();
+        }
+
         SceneManager.LoadScene(levelName);
     }
 
