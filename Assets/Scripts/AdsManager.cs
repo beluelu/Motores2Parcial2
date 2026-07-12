@@ -1,5 +1,6 @@
 ﻿using Unity.Services.LevelPlay;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AdsManager : MonoBehaviour
 {
@@ -8,21 +9,21 @@ public class AdsManager : MonoBehaviour
 
     private LevelPlayRewardedAd rewardedAd;
 
-    private bool rewardGranted = false;
+    private bool userFinishedVideo = false;
 
     private void Start()
     {
         CreateRewarded();
     }
 
-    
-
     public void ShowRewardedAd()
     {
         Debug.Log("Mostrando Rewarded");
 
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
         AudioListener.pause = true;
+
+        userFinishedVideo = false;
 
         if (rewardedAd != null)
         {
@@ -46,9 +47,6 @@ public class AdsManager : MonoBehaviour
         rewardedAd.LoadAd();
     }
 
-
-
-   
     private void OnRewardedLoaded(LevelPlayAdInfo adInfo)
     {
         Debug.Log("Rewarded cargada");
@@ -61,55 +59,60 @@ public class AdsManager : MonoBehaviour
 
     private void OnAdDisplayed(LevelPlayAdInfo adInfo)
     {
-        Debug.Log("Anuncio mostrado");
-
+        Debug.Log("Anuncio en pantalla - Físicas del nivel congeladas");
         Time.timeScale = 0f;
     }
 
     private void OnAdClosed(LevelPlayAdInfo adInfo)
     {
-        Debug.Log("Anuncio cerrado");
+        Debug.Log("Ventana del anuncio cerrada físicamente");
 
-        PauseScreen pause = FindFirstObjectByType<PauseScreen>();
-
-        if (pause != null)
+        if (userFinishedVideo == false)
         {
-            if (rewardGranted)
+            Debug.Log("Cerró antes. Inyectando 10 monedas en tu DataManager nativo.");
+
+            if (DataManager.Instance != null)
             {
-                // Vio el anuncio completo
-                pause.RevivePlayer();
+                DataManager.Instance.currency += 10;
+                DataManager.Instance.SaveData();
             }
             else
             {
-                // Lo cerró antes
-                PlayerStats stats = FindFirstObjectByType<PlayerStats>();
-
-                if (stats != null)
-                {
-                    stats.AddCoins(10);
-                }
-
-                pause.GameOver();
+                int currentCoins = PlayerPrefs.GetInt("MonedasTotales", 0);
+                PlayerPrefs.SetInt("MonedasTotales", currentCoins + 10);
+                PlayerPrefs.Save();
             }
+
+            Time.timeScale = 1f;
+            AudioListener.pause = false;
+
+            SceneManager.LoadScene("MainMenu");
+            return;
         }
 
-        rewardGranted = false;
-
         rewardedAd.LoadAd();
-
         AudioListener.pause = false;
     }
 
     private void OnAdRewarded(LevelPlayAdInfo adInfo, LevelPlayReward reward)
     {
-        Debug.Log("Recompensa obtenida");
+        Debug.Log("¡Video completado! Reviviendo en carrera...");
 
-        rewardGranted = true;
+        userFinishedVideo = true;
+
+        PauseScreen pause = FindFirstObjectByType<PauseScreen>();
+        if (pause != null)
+        {
+            Time.timeScale = 1f;
+            pause.RevivePlayer();
+        }
     }
 
     private void OnAdDisplayFailed(LevelPlayAdInfo adInfo, LevelPlayAdError error)
     {
         Debug.LogError("Error mostrando anuncio: " + error);
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
     }
 }
 

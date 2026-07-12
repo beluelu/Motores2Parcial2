@@ -57,7 +57,7 @@ public class MobileNotificationManager : MonoBehaviour
 
     private void TriggerNotificationSequence()
     {
-        Debug.Log("<color=green><b>[MOBILE NOTIF]</b> ¡Salida detectada! Programando recordatorios en segundo plano... </color>");
+        Debug.Log("¡Salida detectada! Programando recordatorios en segundo plano...");
 
 #if UNITY_ANDROID
         AndroidNotificationCenter.CancelAllNotifications();
