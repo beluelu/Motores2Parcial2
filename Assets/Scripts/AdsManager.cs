@@ -22,7 +22,6 @@ public class AdsManager : MonoBehaviour
 
     private IEnumerator SafeShowAdRoutine()
     {
-        Debug.Log("Despertando el tiempo de Unity antes de lanzar el anuncio...");
 
         Time.timeScale = 1f;
         AudioListener.pause = true;
@@ -37,7 +36,6 @@ public class AdsManager : MonoBehaviour
 
     private void CreateRewarded()
     {
-        Debug.Log("Creando Rewarded");
 
         rewardedAd = new LevelPlayRewardedAd(rewardedAdUnitId);
 
@@ -78,7 +76,6 @@ public class AdsManager : MonoBehaviour
 
     private void OnAdRewarded(LevelPlayAdInfo adInfo, LevelPlayReward reward)
     {
-        Debug.Log("<color=green><b>[ADS REWARDED SUCCESS]</b> ¡Video completado! Procesando reinicio seguro...</color>");
 
         if (GameManager.instance != null)
         {
