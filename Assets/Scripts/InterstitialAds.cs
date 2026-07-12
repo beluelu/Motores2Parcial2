@@ -41,7 +41,7 @@ public class InterstitialAds : MonoBehaviour
 
     private void OnAdClosed(LevelPlayAdInfo adInfo)
     {
-        SceneManager.LoadScene(sceneToLoad);
+        LoadingManager.LoadScene(sceneToLoad);
 
         interstitialAd.LoadAd();
     }
