@@ -79,7 +79,7 @@ public class MainPanel : MonoBehaviour
             BannerAds.Instance.HideBanner();
         }
 
-        SceneManager.LoadScene(levelName);
+        LoadingManager.LoadScene(levelName);
     }
 
     public void SetMute()
