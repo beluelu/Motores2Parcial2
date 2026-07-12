@@ -1,6 +1,7 @@
 ﻿using Unity.Services.LevelPlay;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class AdsManager : MonoBehaviour
 {
@@ -9,8 +10,6 @@ public class AdsManager : MonoBehaviour
 
     private LevelPlayRewardedAd rewardedAd;
 
-    private bool userFinishedVideo = false;
-
     private void Start()
     {
         CreateRewarded();
@@ -18,12 +17,17 @@ public class AdsManager : MonoBehaviour
 
     public void ShowRewardedAd()
     {
-        Debug.Log("Mostrando Rewarded");
+        StartCoroutine(SafeShowAdRoutine());
+    }
+
+    private IEnumerator SafeShowAdRoutine()
+    {
+        Debug.Log("Despertando el tiempo de Unity antes de lanzar el anuncio...");
 
         Time.timeScale = 1f;
         AudioListener.pause = true;
 
-        userFinishedVideo = false;
+        yield return new WaitForSecondsRealtime(0.15f);
 
         if (rewardedAd != null)
         {
@@ -59,53 +63,35 @@ public class AdsManager : MonoBehaviour
 
     private void OnAdDisplayed(LevelPlayAdInfo adInfo)
     {
-        Debug.Log("Anuncio en pantalla - Físicas del nivel congeladas");
-        Time.timeScale = 0f;
+        Debug.Log("Anuncio en pantalla fluido");
+        Time.timeScale = 1f;
     }
 
     private void OnAdClosed(LevelPlayAdInfo adInfo)
     {
-        Debug.Log("Ventana del anuncio cerrada físicamente");
+        Debug.Log("Ventana de LevelPlay cerrada por el usuario");
 
-        if (userFinishedVideo == false)
-        {
-            Debug.Log("Cerró antes. Inyectando 10 monedas en tu DataManager nativo.");
-
-            if (DataManager.Instance != null)
-            {
-                DataManager.Instance.currency += 10;
-                DataManager.Instance.SaveData();
-            }
-            else
-            {
-                int currentCoins = PlayerPrefs.GetInt("MonedasTotales", 0);
-                PlayerPrefs.SetInt("MonedasTotales", currentCoins + 10);
-                PlayerPrefs.Save();
-            }
-
-            Time.timeScale = 1f;
-            AudioListener.pause = false;
-
-            SceneManager.LoadScene("MainMenu");
-            return;
-        }
+        AudioListener.pause = false;
 
         rewardedAd.LoadAd();
-        AudioListener.pause = false;
     }
 
     private void OnAdRewarded(LevelPlayAdInfo adInfo, LevelPlayReward reward)
     {
-        Debug.Log("¡Video completado! Reviviendo en carrera...");
+        Debug.Log("<color=green><b>[ADS REWARDED SUCCESS]</b> ¡Video completado! Procesando reinicio seguro...</color>");
 
-        userFinishedVideo = true;
-
-        PauseScreen pause = FindFirstObjectByType<PauseScreen>();
-        if (pause != null)
+        if (GameManager.instance != null)
         {
-            Time.timeScale = 1f;
-            pause.RevivePlayer();
+            PlayerPrefs.SetInt("MonedasGuardadasAd", GameManager.instance.currentCoins);
+
+            PlayerPrefs.SetInt("VengoDeAd", 1);
+            PlayerPrefs.Save();
         }
+
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnAdDisplayFailed(LevelPlayAdInfo adInfo, LevelPlayAdError error)
@@ -113,6 +99,13 @@ public class AdsManager : MonoBehaviour
         Debug.LogError("Error mostrando anuncio: " + error);
         Time.timeScale = 1f;
         AudioListener.pause = false;
+
+        if (DataManager.Instance != null)
+        {
+            DataManager.Instance.currency += 10;
+            DataManager.Instance.SaveData();
+        }
+        SceneManager.LoadScene("MainMenu");
     }
 }
 
