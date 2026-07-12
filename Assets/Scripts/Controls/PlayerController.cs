@@ -1,18 +1,16 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-
     private TutorialManager tutorialManager;
-   
     private int currentLane = 1;
 
     public float laneDistance = 3f;
     public float laneChangeSpeed = 10f;
 
     private bool isChangingLane = false;
-
     private float verticalVelocity = 0f;
     public float jumpForce;
     public float gravity;
@@ -27,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     public static Action IsGameOver;
 
+    private bool isInvincible = false;
 
     [Header("Collision Layers")]
     public LayerMask smallObstacleLayer;
@@ -36,7 +35,6 @@ public class PlayerController : MonoBehaviour
     {
         tutorialManager = FindFirstObjectByType<TutorialManager>();
         playerAnim = GetComponent<PlayerAnimation>();
-
 
         if (RemoteConfigManager.Instance != null)
         {
@@ -58,7 +56,6 @@ public class PlayerController : MonoBehaviour
         }
 
         playerCollider = GetComponent<CapsuleCollider>();
-
         originalHeight = playerCollider.height;
         originalCenter = playerCollider.center;
     }
@@ -78,7 +75,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (playerAnim != null && playerAnim.isDead) return;
-        if (playerAnim != null && playerAnim.isStumbling) return;
 
         float targetX = 0;
 
@@ -98,7 +94,14 @@ public class PlayerController : MonoBehaviour
         {
             targetPosition.y = 0;
             verticalVelocity = 0;
-            isGrounded = true;
+
+            if (!isGrounded)
+            {
+                isGrounded = true;
+
+                playerCollider.height = originalHeight;
+                playerCollider.center = originalCenter;
+            }
         }
 
         transform.position = Vector3.Lerp(transform.position, targetPosition, laneChangeSpeed * Time.deltaTime);
@@ -111,35 +114,19 @@ public class PlayerController : MonoBehaviour
 
     public void MoveLeft()
     {
-        if (tutorialManager != null && tutorialManager.waitingForTutorial)
-            return;
-        if (tutorialManager != null &&
-    tutorialManager.currentStep == TutorialManager.TutorialStep.Jump)
-        {
-            return;
-        }
-
-        if (tutorialManager != null &&
-    tutorialManager.currentStep == TutorialManager.TutorialStep.Roll)
-        {
-            return;
-        }
+        if (tutorialManager != null && tutorialManager.waitingForTutorial) return;
+        if (tutorialManager != null && tutorialManager.currentStep == TutorialManager.TutorialStep.Jump) return;
+        if (tutorialManager != null && tutorialManager.currentStep == TutorialManager.TutorialStep.Roll) return;
 
         if (Time.timeScale == 0f) return;
-
         if (isChangingLane) return;
 
-        if (tutorialManager != null &&
-    tutorialManager.currentStep == TutorialManager.TutorialStep.MoveRight)
-        {
-            return;
-        }
+        if (tutorialManager != null && tutorialManager.currentStep == TutorialManager.TutorialStep.MoveRight) return;
 
         if (currentLane > 0)
         {
             currentLane--;
             isChangingLane = true;
-
             tutorialManager?.CheckMoveLeft();
             tutorialManager?.CheckAvoidObstacle();
         }
@@ -147,35 +134,19 @@ public class PlayerController : MonoBehaviour
 
     public void MoveRight()
     {
-        if (tutorialManager != null && tutorialManager.waitingForTutorial)
-            return;
-        if (tutorialManager != null &&
-    tutorialManager.currentStep == TutorialManager.TutorialStep.Jump)
-        {
-            return;
-        }
-
-        if (tutorialManager != null &&
-    tutorialManager.currentStep == TutorialManager.TutorialStep.Roll)
-        {
-            return;
-        }
+        if (tutorialManager != null && tutorialManager.waitingForTutorial) return;
+        if (tutorialManager != null && tutorialManager.currentStep == TutorialManager.TutorialStep.Jump) return;
+        if (tutorialManager != null && tutorialManager.currentStep == TutorialManager.TutorialStep.Roll) return;
 
         if (Time.timeScale == 0f) return;
-
         if (isChangingLane) return;
 
-        if (tutorialManager != null &&
-    tutorialManager.currentStep == TutorialManager.TutorialStep.MoveLeft)
-        {
-            return;
-        }
+        if (tutorialManager != null && tutorialManager.currentStep == TutorialManager.TutorialStep.MoveLeft) return;
 
         if (currentLane < 2)
         {
             currentLane++;
             isChangingLane = true;
-
             tutorialManager?.CheckMoveRight();
             tutorialManager?.CheckAvoidObstacle();
         }
@@ -183,14 +154,8 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (tutorialManager != null && tutorialManager.waitingForTutorial)
-            return;
-        if (tutorialManager != null &&
-    tutorialManager.IsTutorialPaused() &&
-    tutorialManager.currentStep != TutorialManager.TutorialStep.Jump)
-        {
-            return;
-        }
+        if (tutorialManager != null && tutorialManager.waitingForTutorial) return;
+        if (tutorialManager != null && tutorialManager.IsTutorialPaused() && tutorialManager.currentStep != TutorialManager.TutorialStep.Jump) return;
 
         if (Time.timeScale == 0f) return;
 
@@ -198,6 +163,9 @@ public class PlayerController : MonoBehaviour
         {
             verticalVelocity = jumpForce;
             isGrounded = false;
+
+            playerCollider.height = originalHeight / 3f;
+            playerCollider.center = new Vector3(originalCenter.x, originalCenter.y + 1.2f, originalCenter.z);
 
             tutorialManager?.CheckJump();
         }
@@ -213,45 +181,67 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (isInvincible) return;
+
         PlayerStats stats = GetComponent<PlayerStats>();
         int otherLayer = other.gameObject.layer;
 
-
         if (((1 << otherLayer) & smallObstacleLayer) != 0)
         {
-            if (isGrounded)
+            if (stats != null)
+            {
+                stats.TakeDamage(1);
+
+                if (stats.currentLives <= 0)
+                {
+                    Section.isGameOver = true;
+                    TriggerFall();
+                }
+                else
+                {
+                    StartCoroutine(DamageFlickerRoutine());
+                }
+            }
+        }
+        else if (((1 << otherLayer) & bigObstacleLayer) != 0)
+        {
+            if (isGrounded && playerAnim != null && playerAnim.isRolling)
+            {
+                return;
+            }
+            else
             {
                 if (stats != null)
                 {
-                    stats.TakeDamage(1);
-
-
-                    if (stats.currentLives <= 0)
-                    {
-                        Section.isGameOver = true;
-                    }
+                    stats.TakeDamage(999);
                 }
 
-                TriggerStumble();
-            }
-        }
-
-        else if (((1 << otherLayer) & bigObstacleLayer) != 0)
-        {
-            if (!playerAnim.isRolling)
-            {
-                if (stats != null)
-                    stats.TakeDamage(999);
-
-
                 Section.isGameOver = true;
+                TriggerFall();
             }
         }
     }
 
-    void TriggerStumble()
+    private IEnumerator DamageFlickerRoutine()
     {
-        if (playerAnim != null && playerAnim.isStumbling) return;
-        playerAnim.Stumble();
+        isInvincible = true;
+        Renderer playerRenderer = GetComponentInChildren<Renderer>();
+
+        if (playerRenderer != null)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                playerRenderer.enabled = false;
+                yield return new WaitForSeconds(0.1f);
+                playerRenderer.enabled = true;
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        else
+        {
+            yield return new WaitForSeconds(1f);
+        }
+
+        isInvincible = false;
     }
 }
