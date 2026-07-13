@@ -10,6 +10,12 @@ public class AdsManager : MonoBehaviour
 
     private LevelPlayRewardedAd rewardedAd;
 
+    [Header("Interfaz de Penalización")]
+    public GameObject canvasGameOverSeleccionado;
+
+    private float timeWhenAdStarted = 0f;
+    private bool userEarnedReward = false;
+
     private void Start()
     {
         CreateRewarded();
@@ -22,9 +28,11 @@ public class AdsManager : MonoBehaviour
 
     private IEnumerator SafeShowAdRoutine()
     {
-
         Time.timeScale = 1f;
         AudioListener.pause = true;
+
+        userEarnedReward = false;
+        timeWhenAdStarted = 0f;
 
         yield return new WaitForSecondsRealtime(0.15f);
 
@@ -36,7 +44,6 @@ public class AdsManager : MonoBehaviour
 
     private void CreateRewarded()
     {
-
         rewardedAd = new LevelPlayRewardedAd(rewardedAdUnitId);
 
         rewardedAd.OnAdLoaded += OnRewardedLoaded;
@@ -49,60 +56,83 @@ public class AdsManager : MonoBehaviour
         rewardedAd.LoadAd();
     }
 
-    private void OnRewardedLoaded(LevelPlayAdInfo adInfo)
-    {
-        Debug.Log("Rewarded cargada");
-    }
+    private void OnRewardedLoaded(LevelPlayAdInfo adInfo) { }
 
-    private void OnRewardedLoadFailed(LevelPlayAdError error)
-    {
-        Debug.LogError("Error al cargar Rewarded: " + error);
-    }
+    private void OnRewardedLoadFailed(LevelPlayAdError error) { }
 
     private void OnAdDisplayed(LevelPlayAdInfo adInfo)
     {
-        Debug.Log("Anuncio en pantalla fluido");
         Time.timeScale = 1f;
+        timeWhenAdStarted = Time.realtimeSinceStartup;
     }
 
     private void OnAdClosed(LevelPlayAdInfo adInfo)
     {
-        Debug.Log("Ventana de LevelPlay cerrada por el usuario");
-
         AudioListener.pause = false;
+
+        float totalSecondsWatched = Time.realtimeSinceStartup - timeWhenAdStarted;
+
+        // Si cerró antes de los 4.5 segundos reales de reloj
+        if (userEarnedReward == false || totalSecondsWatched < 4.5f)
+        {
+            if (DataManager.Instance != null)
+            {
+                DataManager.Instance.currency += 10;
+                DataManager.Instance.SaveData();
+            }
+            else
+            {
+                int currentCoins = PlayerPrefs.GetInt("MonedasTotales", 0);
+                PlayerPrefs.SetInt("MonedasTotales", currentCoins + 10);
+                PlayerPrefs.Save();
+            }
+
+            Section.isGameOver = true;
+            Time.timeScale = 0f;
+
+            if (canvasGameOverSeleccionado != null)
+            {
+                canvasGameOverSeleccionado.SetActive(true);
+            }
+            else
+            {
+                PauseScreen pause = FindFirstObjectByType<PauseScreen>();
+                if (pause != null) pause.GameOver();
+            }
+
+            rewardedAd.LoadAd();
+            return;
+        }
 
         rewardedAd.LoadAd();
     }
 
     private void OnAdRewarded(LevelPlayAdInfo adInfo, LevelPlayReward reward)
     {
+        float totalSecondsWatched = Time.realtimeSinceStartup - timeWhenAdStarted;
 
-        if (GameManager.instance != null)
+        if (totalSecondsWatched >= 4.5f)
         {
-            PlayerPrefs.SetInt("MonedasGuardadasAd", GameManager.instance.currentCoins);
+            userEarnedReward = true;
 
-            PlayerPrefs.SetInt("VengoDeAd", 1);
-            PlayerPrefs.Save();
+            if (GameManager.instance != null)
+            {
+                PlayerPrefs.SetInt("MonedasGuardadasAd", GameManager.instance.currentCoins);
+                PlayerPrefs.SetInt("VengoDeAd", 1);
+                PlayerPrefs.Save();
+            }
+
+            Time.timeScale = 1f;
+            AudioListener.pause = false;
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-
-        Time.timeScale = 1f;
-        AudioListener.pause = false;
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnAdDisplayFailed(LevelPlayAdInfo adInfo, LevelPlayAdError error)
     {
-        Debug.LogError("Error mostrando anuncio: " + error);
         Time.timeScale = 1f;
         AudioListener.pause = false;
-
-        if (DataManager.Instance != null)
-        {
-            DataManager.Instance.currency += 10;
-            DataManager.Instance.SaveData();
-        }
-        SceneManager.LoadScene("MainMenu");
     }
 }
 
