@@ -4,7 +4,7 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
 
-    [Header("Billetera Global")]
+    [Header("Global Wallet")]
     public int currency;
 
     void Awake()
@@ -25,7 +25,7 @@ public class DataManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("MonedasTotales", currency);
         PlayerPrefs.Save();
-        Debug.Log("Monedas guardadas en el dispositivo: " + currency);
+        Debug.Log("Coins saved to the device: " + currency);
     }
 
     public void LoadData()
@@ -36,8 +36,7 @@ public class DataManager : MonoBehaviour
     public void DeleteAllData()
     {
         PlayerPrefs.DeleteAll();
-        currency = 0;           
-        SaveData();             
-        Debug.Log("Todos los datos han sido borrados de PlayerPrefs.");
+        currency = 0;
+        SaveData();
     }
 }
