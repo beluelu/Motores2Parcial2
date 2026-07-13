@@ -135,12 +135,21 @@ public class PlayerAnimation : MonoBehaviour
 
     public void StopRun()
     {
-        animator.enabled = false;
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
+
+        if (animator == null) return;
+        animator.SetBool("IsRunning", false);
     }
 
     public void ResumeRun()
     {
-        animator.enabled = true;
+        if (animator == null) animator = GetComponentInChildren<Animator>();
+        if (animator == null) return;
+
+        animator.SetBool("IsRunning", true);
     }
 
     public void ReviveAnimation()
