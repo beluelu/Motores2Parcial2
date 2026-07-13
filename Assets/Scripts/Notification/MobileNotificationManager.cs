@@ -2,7 +2,6 @@
 using System;
 #if UNITY_ANDROID || UNITY_IOS
 using Unity.Notifications.Android;
-using Unity.Notifications.iOS;
 #endif
 
 public class MobileNotificationManager : MonoBehaviour
