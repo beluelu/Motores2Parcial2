@@ -55,7 +55,13 @@ public class TutorialManager : MonoBehaviour
 
     public void StopFloor(string message, TutorialStep step)
     {
+       
         tutorialFloor.canMove = false;
+
+        if (MusicFade.Instance != null)
+        {
+            MusicFade.Instance.LowerVolume();
+        }
 
         waitingForTutorial = false;
         playerAnimation.StopRun();
@@ -95,6 +101,7 @@ public class TutorialManager : MonoBehaviour
 
     public void ResumeFloor()
     {
+        
         tutorialFloor.canMove = true;
 
         waitingForTutorial = true;
@@ -103,6 +110,11 @@ public class TutorialManager : MonoBehaviour
         StopAllCoroutines();
 
         HideAllArrows();
+
+        if (MusicFade.Instance != null)
+        {
+            MusicFade.Instance.RestoreVolume();
+        }
 
         tutorialPanel.SetActive(false);
     }
