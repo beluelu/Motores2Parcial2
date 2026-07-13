@@ -7969,6 +7969,7 @@ MonoBehaviour:
   coinsToWin: 20
   victoryPanel: {fileID: 487163437}
   panelTouchToStart: {fileID: 1587760106}
+  startImmediately: 0
 --- !u!1 &942618066
 GameObject:
   m_ObjectHideFlags: 0
