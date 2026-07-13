@@ -8,14 +8,6 @@ public class ConfirmationPanelControl : MonoBehaviour
     [Tooltip("Drag and drop this same Panel object here")]
     public GameObject panelObject;
 
-    private void Start()
-    {
-        if (panelObject != null)
-        {
-            panelObject.SetActive(false);
-        }
-    }
-
     public void OpenPanel()
     {
         if (panelObject != null)
