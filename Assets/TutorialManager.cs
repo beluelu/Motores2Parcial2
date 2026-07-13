@@ -19,12 +19,17 @@ public class TutorialManager : MonoBehaviour
 
     public bool waitingForTutorial = true;
 
+    [Header("Intro")]
+    public GameObject introPanel;
+
     private void Start()
     {
         player = FindFirstObjectByType<PlayerController>();
         playerAnimation = FindFirstObjectByType<PlayerAnimation>();
 
         HideAllArrows();
+
+        StartCoroutine(ShowIntro());
     }
 
     void HideAllArrows()
@@ -177,5 +182,14 @@ public class TutorialManager : MonoBehaviour
         }
 
         HideAllArrows();
+    }
+
+    IEnumerator ShowIntro()
+    {
+        introPanel.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        introPanel.SetActive(false);
     }
 }
