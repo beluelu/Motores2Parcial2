@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     private bool esperaToqueInicial = false;
     private PlayerAnimation playerAnim;
 
+    [SerializeField] private bool startImmediately = false;
+
     private void Awake()
     {
         instance = this;
@@ -35,7 +37,14 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        ActivarEsperaToque();
+        if (startImmediately)
+        {
+            ArrancarCarreraReal();
+        }
+        else
+        {
+            ActivarEsperaToque();
+        }
     }
 
     private void Update()

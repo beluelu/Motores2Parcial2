@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using System.Collections;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -59,6 +60,8 @@ public class TutorialManager : MonoBehaviour
 
         HideAllArrows();
 
+        currentStep = step;
+
         switch (step)
         {
             case TutorialStep.MoveLeft:
@@ -67,6 +70,10 @@ public class TutorialManager : MonoBehaviour
 
             case TutorialStep.MoveRight:
                 rightArrow.SetActive(true);
+                break;
+
+            case TutorialStep.AvoidObstacle:
+                StartCoroutine(AlternateArrows());
                 break;
 
             case TutorialStep.Jump:
@@ -78,7 +85,7 @@ public class TutorialManager : MonoBehaviour
                 break;
         }
 
-        currentStep = step;
+       
     }
 
     public void ResumeFloor()
@@ -87,6 +94,8 @@ public class TutorialManager : MonoBehaviour
 
         waitingForTutorial = true;
         playerAnimation.ResumeRun();
+
+        StopAllCoroutines();
 
         HideAllArrows();
 
@@ -150,5 +159,23 @@ public class TutorialManager : MonoBehaviour
     public bool IsTutorialPaused()
     {
         return tutorialPanel.activeSelf;
+    }
+
+    IEnumerator AlternateArrows()
+    {
+        while (currentStep == TutorialStep.AvoidObstacle)
+        {
+            leftArrow.SetActive(true);
+            rightArrow.SetActive(false);
+
+            yield return new WaitForSeconds(0.5f);
+
+            leftArrow.SetActive(false);
+            rightArrow.SetActive(true);
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        HideAllArrows();
     }
 }
