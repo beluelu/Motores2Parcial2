@@ -4245,7 +4245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialManager: {fileID: 1164124853}
-  message: Deslizate por debajo del obstaculo!
+  message: Slide under the obstacle!
   step: 5
 --- !u!65 &312816941
 BoxCollider:
@@ -5730,7 +5730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialManager: {fileID: 1164124853}
-  message: Salta el obstaculo!
+  message: Jump the obstacle!
   step: 4
 --- !u!65 &444470722
 BoxCollider:
@@ -7972,7 +7972,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &631628219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8050,9 +8050,6 @@ RectTransform:
   m_Children:
   - {fileID: 1583025312}
   - {fileID: 1110316636}
-  - {fileID: 1198235558}
-  - {fileID: 1585728029}
-  - {fileID: 1228504130}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -9232,7 +9229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialManager: {fileID: 1164124853}
-  message: Desliza hacia la derecha
+  message: Swipe right!
   step: 2
 --- !u!65 &693058299
 BoxCollider:
@@ -10533,7 +10530,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Recolecta todas las monedas!
+  m_text: Collect all the coins!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1d14b76612c0d534a9764d2ab49e3990, type: 2}
   m_sharedMaterial: {fileID: 7802196274542065816, guid: 1d14b76612c0d534a9764d2ab49e3990, type: 2}
@@ -12837,7 +12834,7 @@ Transform:
   m_GameObject: {fileID: 1018471801}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.009, y: 0.055, z: -56.74}
+  m_LocalPosition: {x: -0.009, y: 0.055, z: -57.85}
   m_LocalScale: {x: 0.007494424, y: 0.007494424, z: 0.007494424}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13617,7 +13614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialManager: {fileID: 1164124853}
-  message: Esquiva el obstaculo!
+  message: Dodge the obstacle!
   step: 3
 --- !u!65 &1090535176
 BoxCollider:
@@ -14665,16 +14662,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1198235557}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.020408, y: 1.0767937, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 631628222}
+  m_Father: {fileID: 1583025312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.6994, y: 38.360027}
+  m_AnchoredPosition: {x: -0.000014066696, y: 33.33651}
   m_SizeDelta: {x: 176.72, y: 176.72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1198235559
@@ -15358,16 +15355,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1228504129}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.020408, y: 1.0767937, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 631628222}
+  m_Father: {fileID: 1583025312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 211, y: 38.360027}
+  m_AnchoredPosition: {x: 219.081, y: 33.33651}
   m_SizeDelta: {x: 176.72, y: 176.72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1228504131
@@ -15942,7 +15939,7 @@ Transform:
   m_GameObject: {fileID: 1280417072}
   serializedVersion: 2
   m_LocalRotation: {x: 0.12237832, y: -0, z: -0, w: 0.99248356}
-  m_LocalPosition: {x: -0.018, y: 1.52, z: -57.230003}
+  m_LocalPosition: {x: -0.018, y: 1.52, z: -58.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19626,7 +19623,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Desliza hacia la izquierda
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1d14b76612c0d534a9764d2ab49e3990, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -19692,7 +19689,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1560717778
@@ -20007,13 +20004,15 @@ GameObject:
   - component: {fileID: 1583025314}
   - component: {fileID: 1583025313}
   - component: {fileID: 1583025315}
+  - component: {fileID: 1583025317}
+  - component: {fileID: 1583025316}
   m_Layer: 5
   m_Name: FinishPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1583025312
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20031,6 +20030,9 @@ RectTransform:
   - {fileID: 1986332403}
   - {fileID: 207656644}
   - {fileID: 1121378625}
+  - {fileID: 1198235558}
+  - {fileID: 1585728029}
+  - {fileID: 1228504130}
   m_Father: {fileID: 631628222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -20090,6 +20092,115 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   finishPanel: {fileID: 0}
   tutorialFloor: {fileID: 0}
+--- !u!114 &1583025316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583025311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49cca96bbe776804e8fbec63b61c9ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!82 &1583025317
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583025311}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: a1972bd0b41b922468950731aff73f49, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1584753308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20189,16 +20300,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1585728028}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.020408, y: 1.0767937, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 631628222}
+  m_Father: {fileID: 1583025312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -229, y: 38.360027}
+  m_AnchoredPosition: {x: -229.89857, y: 33.33651}
   m_SizeDelta: {x: 176.72, y: 176.72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1585728030
@@ -22416,7 +22527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialManager: {fileID: 1164124853}
-  message: Desliza hacia la izquierda
+  message: Swipe left!
   step: 1
 --- !u!1001 &1767474197
 PrefabInstance:
@@ -24670,7 +24781,7 @@ Transform:
   m_GameObject: {fileID: 1943436156}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13052596, y: -0, z: -0, w: 0.99144495}
-  m_LocalPosition: {x: 0.14306167, y: 2.359, z: -61.076004}
+  m_LocalPosition: {x: 0.14306167, y: 2.359, z: -62.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

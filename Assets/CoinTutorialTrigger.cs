@@ -6,14 +6,14 @@ public class CoinTutorialTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Alguien entró al Trigger");
+        
 
         if (!other.CompareTag("Player"))
             return;
 
-        Debug.Log("Entró el Player");
+        
 
-        topMessage.ShowMessage("¡Recolecta todas las monedas!");
+        topMessage.ShowMessage("¡Collect all the coins!");
 
         TutorialManager tutorial = FindFirstObjectByType<TutorialManager>();
 

@@ -25,11 +25,11 @@ public class PlayerAnimation : MonoBehaviour
     {
         TutorialManager tutorial = FindFirstObjectByType<TutorialManager>();
 
-        // Mientras corre entre tutoriales, no puede rodar
+        
         if (tutorial != null && tutorial.waitingForTutorial)
             return;
 
-        // Si hay un panel abierto y NO es el del Roll, tampoco
+       
         if (tutorial != null &&
             tutorial.IsTutorialPaused() &&
             tutorial.currentStep != TutorialManager.TutorialStep.Roll)
@@ -51,7 +51,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         TutorialManager tutorial = FindFirstObjectByType<TutorialManager>();
 
-        // Mientras corre entre tutoriales, no puede reproducir la animación
+       
         if (tutorial != null && tutorial.waitingForTutorial)
             return;
 
@@ -136,25 +136,28 @@ public class PlayerAnimation : MonoBehaviour
     public void StopRun()
     {
         if (animator == null)
-        {
             animator = GetComponentInChildren<Animator>();
-        }
 
         if (animator == null) return;
-        animator.SetBool("IsRunning", false);
+
+        animator.speed = 0f;
     }
 
     public void ResumeRun()
     {
-        if (animator == null) animator = GetComponentInChildren<Animator>();
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
+
         if (animator == null) return;
 
-        animator.SetBool("IsRunning", true);
+        animator.speed = 1f;
     }
 
     public void ReviveAnimation()
     {
         isDead = false;
+
+        animator.speed = 1f;
 
         animator.Rebind();
         animator.Update(0f);
