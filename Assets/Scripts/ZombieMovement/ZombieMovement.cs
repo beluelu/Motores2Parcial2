@@ -9,6 +9,8 @@ public class ZombieMovement : MonoBehaviour
 
     void Update()
     {
+        if (pointB == null) return;
+
         if (reached) return;
 
         transform.position = Vector3.MoveTowards(transform.position, pointB.position, speed * Time.deltaTime);
