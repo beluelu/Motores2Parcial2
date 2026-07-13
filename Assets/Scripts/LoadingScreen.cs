@@ -22,7 +22,7 @@ public class LoadingScreen : MonoBehaviour
 
         while (timer < loadingTime)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
 
             float progress = Mathf.Clamp01(timer / loadingTime);
 
