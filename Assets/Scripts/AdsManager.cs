@@ -72,7 +72,6 @@ public class AdsManager : MonoBehaviour
 
         float totalSecondsWatched = Time.realtimeSinceStartup - timeWhenAdStarted;
 
-        // Si cerró antes de los 4.5 segundos reales de reloj
         if (userEarnedReward == false || totalSecondsWatched < 4.5f)
         {
             if (DataManager.Instance != null)

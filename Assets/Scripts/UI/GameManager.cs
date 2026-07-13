@@ -2,11 +2,18 @@
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+      public static GameManager instance;
     public int currentCoins = 0;
     public int coinsToWin = 20;
 
     public GameObject victoryPanel;
+
+    [Header("Interfaz de Inicio Seguro")]
+    [Tooltip("Arrastrá acá desde la jerarquía el cartel flotante que dice 'Tocar para empezar'")]
+    public GameObject panelTouchToStart;
+
+    private bool esperaToqueInicial = false;
+    private PlayerAnimation playerAnim;
 
     private void Awake()
     {
@@ -16,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        playerAnim = FindFirstObjectByType<PlayerAnimation>();
+
         if (PlayerPrefs.HasKey("VengoDeAd") && PlayerPrefs.GetInt("VengoDeAd") == 1)
         {
             currentCoins = PlayerPrefs.GetInt("MonedasGuardadasAd", 0);
@@ -25,6 +34,34 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.DeleteKey("MonedasGuardadasAd");
             PlayerPrefs.Save();
         }
+
+        ActivarEsperaToque();
+    }
+
+    private void Update()
+    {
+        if (esperaToqueInicial && Input.GetMouseButtonDown(0))
+        {
+            ArrancarCarreraReal();
+        }
+    }
+
+    public void ActivarEsperaToque()
+    {
+        esperaToqueInicial = true;
+        Time.timeScale = 0f;
+
+        if (playerAnim != null) playerAnim.StopRun();
+        if (panelTouchToStart != null) panelTouchToStart.SetActive(true);
+    }
+
+    private void ArrancarCarreraReal()
+    {
+        esperaToqueInicial = false;
+        Time.timeScale = 1f;
+
+        if (playerAnim != null) playerAnim.ResumeRun();
+        if (panelTouchToStart != null) panelTouchToStart.SetActive(false);
     }
 
     public void AddCoins(int amount)
